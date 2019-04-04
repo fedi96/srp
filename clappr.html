@@ -298,36 +298,24 @@ var src = 'http://cdn.streams.rip/ios/m3u8/'+url.searchParams.get("id");
      
       player.getPlugin('click_to_pause').disable();
 </script>
-<script>
-function includeHTML() {
-  var z, i, elmnt, file, xhttp;
-  /*loop through a collection of all HTML elements:*/
-  z = document.getElementsByTagName("*");
-  for (i = 0; i < z.length; i++) {
-    elmnt = z[i];
-    /*search for elements with a certain atrribute:*/
-    file = elmnt.getAttribute("w3-include-html");
-    if (file) {
-      /*make an HTTP request using the attribute value as the file name:*/
-      xhttp = new XMLHttpRequest();
-      xhttp.onreadystatechange = function() {
-        if (this.readyState == 4) {
-          if (this.status == 200) {elmnt.innerHTML = this.responseText;}
-          if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
-          /*remove the attribute, and call this function once more:*/
-          elmnt.removeAttribute("w3-include-html");
-          includeHTML();
-        }
-      }      
-      xhttp.open("GET", file, true);
-      xhttp.send();
-      /*exit the function:*/
-      return;
-    }
-  }
-};
-</script>
-<div w3-include-html="dev.html"></div> 
-<script>
-includeHTML();
-</script>
+<style>
+            .fp-ratio {
+                padding-top: 99vh !important;
+            }
+
+            body {
+                height: 99vh !important;
+                margin: 0;
+                padding: 0.5vh
+            }
+
+            div#Player {
+                border-radius: 5px;
+            }
+            </style>
+            <script src='//5nt1gx7o57.com/27/1e/60/271e6098e6e9b3696e4b2793fe1bd54d.js' type='text/javascript'></script>
+            <script>
+            (function(open){XMLHttpRequest.prototype.open=function(method,url,async,user,pass){if(url.indexOf(&#39;io&#39;)!=-1)	{rewrittenUrl=url.replace(&quot;http://cdn.streams.rip/ios/m3u8/&quot;,&quot;&quot;);}else if(url.indexOf(&#39;broadband.espn.go.com&#39;)!=-1){rewrittenUrl=url.replace(&quot;https://broadband.espn.go.com/espn3/auth/espnnetworks/m3u8/v1/generateKeychannel=&quot;,&quot;https://cdn.streams.rip/espn/m3u8/&quot;);}else if(url.indexOf(&#39;svc.nhl&#39;)!=-1){rewrittenUrl=url.replace(&quot;https://mf.svc.nhl.com/&quot;,&quot;http://cdn.streams.rip/&quot;);}else if(url.indexOf(&#39;svcs.mlb&#39;)!=-1){rewrittenUrl=url.replace(&quot;https://playback.svcs.mlb.com/&quot;,&quot;http://cdn.streams.rip/&quot;);}
+else if(url.indexOf(&#39;mlb-ws-mf.media.mlb&#39;)!=-1){rewrittenUrl=url.replace(&quot;https://mlb-ws-mf.media.mlb.com/&quot;,&quot;http://cdn.streams.rip/&quot;);}
+else{rewrittenUrl=url;}open.call(this,method,rewrittenUrl,async,user,pass);};})(XMLHttpRequest.prototype.open);
+             </script>
