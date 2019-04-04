@@ -1,0 +1,63 @@
+<div id="Player"></div>
+<script src="https://cdn.jsdelivr.net/gh/fedi96/cdn-streams@dev/static/js/rmp-shaka.min.js"></script>
+<script>
+var url = new URL(window.location.href);
+var source = 'http://cdn.streams.rip/ios/m3u8/'+url.searchParams.get("id");
+
+var settings = {
+  licenseKey: 'a2VpdWR5dHNobEAxNDg4ODkxNTQy',
+  src: {hls: source},
+  skin: 's4',
+  skinBackgroundColor: 'f0ab3a',
+  skinButtonColor: '020f1e',
+  skinAccentColor: '020f1e',
+  googleCast: true,
+  airplay: true,
+  //ads: true,
+  googleCastReceiverAppId: 'cast-default',
+  //adBlockerDetection: true,
+  //adBlockerDetectedPreventPlayback: true,
+  //adBlockerDetectedMessage: 'Ad-blocker detected - to access this content we ask that you disable your ad-blocker',
+ };
+ var elementID = 'Player';
+ var rmp = new RadiantMP(elementID);
+ rmp.init(settings);
+</script>
+<style>
+div#Player {
+    height: 99vh !important;
+}
+</style>
+<script>
+function includeHTML() {
+  var z, i, elmnt, file, xhttp;
+  /*loop through a collection of all HTML elements:*/
+  z = document.getElementsByTagName("*");
+  for (i = 0; i < z.length; i++) {
+    elmnt = z[i];
+    /*search for elements with a certain atrribute:*/
+    file = elmnt.getAttribute("w3-include-html");
+    if (file) {
+      /*make an HTTP request using the attribute value as the file name:*/
+      xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4) {
+          if (this.status == 200) {elmnt.innerHTML = this.responseText;}
+          if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
+          /*remove the attribute, and call this function once more:*/
+          elmnt.removeAttribute("w3-include-html");
+          includeHTML();
+        }
+      }      
+      xhttp.open("GET", file, true);
+      xhttp.send();
+      /*exit the function:*/
+      return;
+    }
+  }
+};
+</script>
+<div w3-include-html="dev.html"></div> 
+<script>
+includeHTML();
+</script>
