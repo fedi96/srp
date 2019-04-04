@@ -1,0 +1,333 @@
+  <style>
+    body {
+      overflow: hidden;
+    }
+    .close img {
+      width: 12px
+    }
+    [data-watermark] {
+      width: auto !important;
+    }
+    [data-watermark]:hover {
+      cursor: pointer;
+    }
+    [data-position] {
+      display: none !important;
+    }
+    [data-duration] {
+      display: none !important;
+    }
+    button[aria-label='hd-indicator'] {
+      display: none !important;
+    }
+    #Player {
+      background-color: #352c2d;
+    }
+  </style>
+<script src="https://cdn.jsdelivr.net/npm/clappr@0.3.1/dist/clappr.min.js" data-turbolinks-track="true"></script>
+<script src="https://cdn.jsdelivr.net/npm/level-selector@0.2.0/dist/level-selector.min.js" data-turbolinks-track="true"></script>
+<script>
+var clapprTemplate = Object.getOwnPropertyDescriptor(Clappr.MediaControl.prototype, 'template');
+clapprTemplate.get = function () {
+    return Clappr.template(`<div class="media-control-background" data-background></div>
+<div class="media-control-layer" data-controls>
+  <%  var renderBar = function(name) { %>
+      <div class="bar-container" data-<%= name %>>
+        <div class="bar-background" data-<%= name %>>
+          <div class="bar-fill-1" data-<%= name %>></div>
+          <div class="bar-fill-2" data-<%= name %>></div>
+          <div class="bar-hover" data-<%= name %>></div>
+        </div>
+        <div class="bar-scrubber" data-<%= name %>>
+          <div class="bar-scrubber-icon" data-<%= name %>></div>
+        </div>
+      </div>
+  <%  }; %>
+  <%  var renderSegmentedBar = function(name, segments) {
+      segments = segments || 10; %>
+    <div class="bar-container" data-<%= name %>>
+    <% for (var i = 0; i < segments; i++) { %>
+      <div class="segmented-bar-element" data-<%= name %>></div>
+    <% } %>
+    </div>
+  <% }; %>
+  <% var renderDrawer = function(name, renderContent) { %>
+      <div class="drawer-container" data-<%= name %>>
+        <div class="drawer-icon-container" data-<%= name %>>
+          <div class="drawer-icon media-control-icon" data-<%= name %>></div>
+          <span class="drawer-text" data-<%= name %>></span>
+        </div>
+        <% renderContent(name); %>
+      </div>
+  <% }; %>
+  <% var renderIndicator = function(name) { %>
+      <div class="media-control-indicator" data-<%= name %>></div>
+  <% }; %>
+  <% var renderButton = function(name) { %>
+    <button type="button" class="media-control-button media-control-icon" data-<%= name %> aria-label="<%= name %>"></button>
+  <% }; %>
+  <%  var templates = {
+        bar: renderBar,
+        segmentedBar: renderSegmentedBar,
+      };
+      var render = function(settingsList) {
+        settingsList.forEach(function(setting) {
+          if(setting === "seekbar") {
+            renderBar(setting);
+          } else if (setting === "volume") {
+            renderDrawer(setting, settings.volumeBarTemplate ? templates[settings.volumeBarTemplate] : function(name) { return renderSegmentedBar(name); });
+          } else if (setting === "duration" || setting === "position") {
+            renderIndicator(setting);
+          } else {
+            renderButton(setting);
+          }
+        });
+      }; %>
+  <% if (settings.default && settings.default.length) { %>
+  <div class="media-control-center-panel" data-media-control>
+    <% render(settings.default); %>
+  </div>
+  <% } %>
+  <% if (settings.left && settings.left.length) { %>
+  <div class="media-control-left-panel" data-media-control>
+    <% render(settings.left); %>
+  </div>
+  <% } %>
+  <% if (settings.right && settings.right.length) { %>
+  <div class="media-control-right-panel" asdf data-media-control>
+    <% render(settings.right); %>
+    <a class="dvr-only" href="javascript:;" data-ff style="margin-right:5px; width: 30px;/* font-size: 14px !important; */text-align: left;/* color: black !important; */background-color: transparent;color: #fff;font-family: Roboto,Open Sans,Arial,sans-serif;-webkit-font-smoothing: antialiased;border: none;font-size: 12px;">+2m</a>
+    <a   class="dvr-only" href="javascript:;" data-rw style="width: 30px;/* font-size: 14px !important; */text-align: left;/* color: black !important; */background-color: transparent;color: #fff;font-family: Roboto,Open Sans,Arial,sans-serif;-webkit-font-smoothing: antialiased;border: none;font-size: 12px;">-2m</a>
+  </div>
+  <% } %>
+</div>`);
+};
+Object.defineProperty(Clappr.MediaControl.prototype, 'template', clapprTemplate);
+!function(t,e){"object"==typeof exports&&"object"==typeof module?module.exports=e(require("Clappr")):"function"==typeof define&&define.amd?define(["Clappr"],e):"object"==typeof exports?exports.PlaybackRatePlugin=e(require("Clappr")):t.PlaybackRatePlugin=e(t.Clappr)}(this,function(t){return function(t){function e(n){if(a[n])return a[n].exports;var o=a[n]={exports:{},id:n,loaded:!1};return t[n].call(o.exports,o,o.exports,e),o.loaded=!0,o.exports}var a={};return e.m=t,e.c=a,e.p="<%=baseUrl%>/",e(0)}([/*!*********************!*\
+  !*** ./src/main.js ***!
+  \*********************/
+function(t,e,a){"use strict";function n(t){return t&&t.__esModule?t:{"default":t}}function o(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}function r(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function, not "+typeof e);t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,enumerable:!1,writable:!0,configurable:!0}}),e&&(Object.setPrototypeOf?Object.setPrototypeOf(t,e):t.__proto__=e)}Object.defineProperty(e,"__esModule",{value:!0});var i=function(){function t(t,e){for(var a=0;a<e.length;a++){var n=e[a];n.enumerable=n.enumerable||!1,n.configurable=!0,"value"in n&&(n.writable=!0),Object.defineProperty(t,n.key,n)}}return function(e,a,n){return a&&t(e.prototype,a),n&&t(e,n),e}}(),l=function(t,e,a){for(var n=!0;n;){var o=t,r=e,i=a;n=!1,null===o&&(o=Function.prototype);var l=Object.getOwnPropertyDescriptor(o,r);if(void 0!==l){if("value"in l)return l.value;var s=l.get;if(void 0===s)return;return s.call(i)}var c=Object.getPrototypeOf(o);if(null===c)return;t=c,e=r,a=i,n=!0,l=c=void 0}},s=a(1),c=a(2),u=n(c),p=a(3),f=n(p),b=[{value:"0.5",label:"0.5x"},{value:"0.75",label:"0.75x"},{value:"1.0",label:"Normal"},{value:"1.5",label:"1.5x"},{value:"2.0",label:"2x"}],d="1.0",y=function(t){function e(){o(this,e),l(Object.getPrototypeOf(e.prototype),"constructor",this).apply(this,arguments)}return r(e,t),i(e,[{key:"bindEvents",value:function(){this.listenTo(this.core.mediaControl,s.Events.MEDIACONTROL_CONTAINERCHANGED,this.reload),this.listenTo(this.core.mediaControl,s.Events.MEDIACONTROL_RENDERED,this.render),this.listenTo(this.core.mediaControl,s.Events.MEDIACONTROL_HIDE,this.hideContextMenu),this.listenTo(this.core.mediaControl,e.MEDIACONTROL_PLAYBACKRATE,this.updatePlaybackRate)}},{key:"unBindEvents",value:function(){this.stopListening(this.core.mediaControl,s.Events.MEDIACONTROL_CONTAINERCHANGED),this.stopListening(this.core.mediaControl,s.Events.MEDIACONTROL_RENDERED),this.stopListening(this.core.mediaControl,s.Events.MEDIACONTROL_HIDE)}},{key:"reload",value:function(){this.unBindEvents(),this.bindEvents()}},{key:"shouldRender",value:function(){if(!this.core.getCurrentContainer())return!1;var t=this.core.getCurrentPlayback();return"video"!=t.tagName&&"audio"!=t.tagName?!1:!0}},{key:"render",value:function(){var t=this.core.options.playbackRateConfig||{};if(this.playbackRates||(this.playbackRates=t.options||b),this.selectedRate||(this.selectedRate=t.defaultValue||d),this.shouldRender()){var e=(0,s.template)(u["default"]),a=e({playbackRates:this.playbackRates,title:this.getTitle()});this.$el.html(a);var n=s.Styler.getStyleFor(f["default"],{baseUrl:this.core.options.baseUrl});this.$el.append(n),this.core.mediaControl.$(".media-control-right-panel").append(this.el),this.updateText()}return this}},{key:"onRateSelect",value:function(t){var e=t.target.dataset.playbackRateSelect;return this.setSelectedRate(e),this.toggleContextMenu(),t.stopPropagation(),!1}},{key:"onShowMenu",value:function(t){this.toggleContextMenu()}},{key:"toggleContextMenu",value:function(){this.$(".playback_rate ul").toggle()}},{key:"hideContextMenu",value:function(){this.$(".playback_rate ul").hide()}},{key:"updatePlaybackRate",value:function(t){this.setSelectedRate(t)}},{key:"setSelectedRate",value:function(t){this.core.$el.find("video").get(0).playbackRate=t,this.selectedRate=t,this.updateText()}},{key:"setActiveListItem",value:function(t){this.$("a").removeClass("active"),this.$('a[data-playback-rate-select="'+t+'"]').addClass("active")}},{key:"buttonElement",value:function(){return this.$(".playback_rate button")}},{key:"getTitle",value:function(){var t=this,e=this.selectedRate;return this.playbackRates.forEach(function(a){a.value==t.selectedRate&&(e=a.label)}),e}},{key:"updateText",value:function(){this.buttonElement().text(this.getTitle()),this.setActiveListItem(this.selectedRate)}},{key:"name",get:function(){return"playback_rate"}},{key:"template",get:function(){return(0,s.template)(u["default"])}},{key:"attributes",get:function(){return{"class":this.name,"data-playback-rate-select":""}}},{key:"events",get:function(){return{"click [data-playback-rate-select]":"onRateSelect","click [data-playback-rate-button]":"onShowMenu"}}}]),e}(s.UICorePlugin);e["default"]=y,y.type="core",y.MEDIACONTROL_PLAYBACKRATE="playbackRate",t.exports=e["default"]},/*!*************************!*\
+  !*** external "Clappr" ***!
+  \*************************/
+function(e,a){e.exports=t},/*!************************************************!*\
+  !*** ./src/public/playback-rate-selector.html ***!
+  \************************************************/
+function(t,e){t.exports='<button data-playback-rate-button>\n  <%= title %>\n</button>\n<ul>\n  <% for (var i = 0; i < playbackRates.length; i++) { %>\n    <li><a href="#" data-playback-rate-select="<%= playbackRates[i].value %>"><%= playbackRates[i].label %></a></li>\n  <% }; %>\n</ul>\n'},/*!*******************************!*\
+  !*** ./src/public/style.scss ***!
+  \*******************************/
+function(t,e,a){e=t.exports=a(4)(),e.push([t.id,".playback_rate[data-playback-rate-select]{float:right;margin-top:5px;position:relative}.playback_rate[data-playback-rate-select] button{background-color:transparent;color:#fff;font-family:Roboto,Open Sans,Arial,sans-serif;-webkit-font-smoothing:antialiased;border:none;font-size:10px;cursor:pointer}.playback_rate[data-playback-rate-select] button:hover{color:#c9c9c9}.playback_rate[data-playback-rate-select] button.changing{-webkit-animation:pulse .5s infinite alternate}.playback_rate[data-playback-rate-select]>ul{display:none;list-style-type:none;position:absolute;bottom:25px;border:1px solid #000;border-radius:4px;background-color:rgba(0,0,0,.7)}.playback_rate[data-playback-rate-select] li{position:relative;font-size:10px}.playback_rate[data-playback-rate-select] li[data-title]{padding:5px}.playback_rate[data-playback-rate-select] li a{color:#aaa;padding:2px 10px 2px 15px;display:block;text-decoration:none}.playback_rate[data-playback-rate-select] li a.active{background-color:#000;font-weight:700;color:#fff}.playback_rate[data-playback-rate-select] li a.active:before{content:'\\2713';position:absolute;top:2px;left:4px}.playback_rate[data-playback-rate-select] li a:hover{color:#fff;text-decoration:none}@-webkit-keyframes pulse{0%{color:#fff}50%{color:#ff0101}to{color:#b80000}}",""])},/*!**************************************!*\
+  !*** ./~/css-loader/lib/css-base.js ***!
+  \**************************************/
+function(t,e){"use strict";t.exports=function(){var t=[];return t.toString=function(){for(var t=[],e=0;e<this.length;e++){var a=this[e];a[2]?t.push("@media "+a[2]+"{"+a[1]+"}"):t.push(a[1])}return t.join("")},t.i=function(e,a){"string"==typeof e&&(e=[[null,e,""]]);for(var n={},o=0;o<this.length;o++){var r=this[o][0];"number"==typeof r&&(n[r]=!0)}for(o=0;o<e.length;o++){var i=e[o];"number"==typeof i[0]&&n[i[0]]||(a&&!i[2]?i[2]=a:a&&(i[2]="("+i[2]+") and ("+a+")"),t.push(i))}},t}}])});
+//# sourceMappingURL=clappr-playback-rate-plugin.min.js.map
+
+</script>
+<script src="https://cdn.jsdelivr.net/npm/clappr-capture-plugin@1.0.0/dist/clappr-capture-plugin.min.js" data-turbolinks-track="true"></script>
+<script src="https://cdn.jsdelivr.net/npm/clappr-chromecast-plugin@latest/dist/clappr-chromecast-plugin.min.js"></script>
+   <style>
+  .spinnit {
+    animation-name: spin;
+    animation-duration: 5000ms;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+  /* transform: rotate(3deg); */
+  /* transform: rotate(0.3rad);/ */
+  /* transform: rotate(3grad); */
+  /* transform: rotate(.03turn);  */
+  }
+  @keyframes spin {
+    from {
+      transform:rotate(0deg);
+    }
+    to {
+      transform:rotate(360deg);
+    }
+  }
+  [data-player] {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    margin: 0;
+    border-radius: 5px;
+  }
+  .playback_rate[data-playback-rate-select] { margin-top: 0px !important; }
+  /* Fix the video container to take up 100% width and to calculate its height based on its children. */
+  [data-player] .container[data-container] {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    border-radius: 5px;
+  }
+  /* Fix the media-control element to take up the entire size of the player. */
+  [data-player] .media-control[data-media-control] {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+  /* Fix the video element to take up 100% width and to calculate its height based on its natural aspect ratio. */
+  [data-player] video {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100vh;
+    border-radius: 5px;
+  }
+  .level_selector[data-level-selector] {
+    float: right;
+    margin-top: 0px !important;
+    position: relative;
+  }
+  .level_selector:focus { outline: none; }
+  [data-level-selector-button]:focus { outline: none; }
+  .dvr-only {  }
+  [data-player].fullscreen { width: 100vw !important; height: auto !important; }
+</style>
+
+<div id="Player"></div>
+<script type="text/javascript">
+var url = new URL(window.location.href);
+var src = 'http://cdn.streams.rip/ios/m3u8/'+url.searchParams.get("id");
+
+    var hlssrc = src;
+    var went_to_start_time = false;
+    var seek_forward = 120;
+    var seek_backward = 120;
+    var seekable = true;
+    var qos_events = [];
+    function time_to_s(time) {
+        if(time < 60) {
+            return time + "s";
+        }
+        return time / 60 + "m";
+    }
+    var BITRATE_LABELS = {6036.025: '720p-60fps',3689.36: '720p-30fps',1873.198: '480p-30fps',993.185: '240p-30fps',5200.000: '720p-HD', 3500.000: '720p-HQ', 2400.000: '540p', 1650000: '480p', 990.000: '360p',
+        5772.652: '720p-60', 4023.049: '720p-HD', 2908.735: '720p-HQ', 2121.091: '540p', 2121.091: '480p', 1425.340: '360p', 985.571: '288p',
+        6000: '720p-60', 4500:'720p-HD', 3500: '720p', 3000:'720p-HQ', 2500: '540p', 1800: '480p', 1600:'540p', 1200: '480p', 800:'360p', 400:'240p',
+        4100: '720p', 2900: '540p', 2140: '504p', 1450: '360p', 1000: '288p', 670: '216p', 6600: '720p-60', 4160: '720p-HD', 2950: '720p-HQ', 2120: '540p', 1400: '360p', 960: '288p', 620: '224p', 153: '180p'
+    };
+    var retry = 1;
+    var clappr_options = {
+        source: hlssrc,
+        plugins: [LevelSelector, Clappr.HLS, PlaybackRatePlugin, ClapprCapturePlugin ,ChromecastPlugin],
+        levelSelectorConfig: {
+            labelCallback: function (level, label) {
+                console.log(level)
+                return BITRATE_LABELS[level.level.bitrate / 1000]
+            }
+        },
+        events: {
+            onPlay: setDvrLabels
+        },
+      chromecast: {
+          appId: '9DFB77C0',
+          media: {
+            type: ChromecastPlugin.Movie,
+            title: 'Streams.rip',
+            subtitle: 'Streamsrip'
+          }
+        },
+        width: '100%',
+        height: '100%',
+        parentId: "#Player",
+        autoPlay: true,
+        hlsjsConfig: {
+            xhrSetup: function (xhr, url) {
+                xhr.onerror = function (err, thing) {
+                    console.log("errrr");
+                    console.log(err);
+                    console.log(thing);
+                    if (retry === 1) {
+                        retry++;
+                        console.log("error: do second try");
+                    }
+                }
+            }
+        }
+    }
+    var player = new Clappr.Player(clappr_options);
+    player.listenTo(player.core.getCurrentContainer(),
+        Clappr.Events.CONTAINER_STATE_BUFFERING,
+        function() { qos_events.push({event: 'CONTAINER_STATE_BUFFERING', time: now()}); check_qos(); ahoy.track("$video:CONTAINER_STATE_BUFFERING", {uuid: "gYUAZV"}) })
+    player.listenTo(player.core.getCurrentContainer(),
+        Clappr.Events.PLAYBACK_LEVEL_SWITCH_END,
+        function() { qos_events.push({event: 'PLAYBACK_LEVEL_SWITCH_END', time: now()}); check_qos(); ahoy.track("$video:PLAYBACK_LEVEL_SWITCH_END", {uuid: "gYUAZV"}) })
+    player.on(Clappr.Events.PLAYER_FULLSCREEN, function(isFullscreen) {
+        if(isFullscreen) {
+        }
+    });
+    player.core.mediaControl.on('capture:base64', (b64) => {
+        var myWindow = window.open("", "PictureWindow");
+    myWindow.document.write(`<img src="${b64}" />`);
+    });
+    function check_qos() {
+        if(qos_events.length > 5) {
+            console.log("wow they might need help");
+        }
+    }
+    function setDvrLabels() {
+        $('[data-player]').attr('style', 'height:auto !important;')
+        $('a[data-ff]').text("+" + time_to_s(seek_forward));
+        $('a[data-rw]').text("-" + time_to_s(seek_backward));
+        if(seekable) {
+            $('.dvr-only').removeClass('.dvr-only');
+        }
+        if(seekable && went_to_start_time === false) {
+            player.seek(default_seek())
+            went_to_start_time = true;
+        }
+    }
+    $(document).on('click', '[data-ff]', function() {
+        var time = player.getCurrentTime();
+        var new_time = time + parseInt(seek_forward);
+        var seek_to = new_time;
+        if(new_time > player.getDuration()) {
+            seek_to = player.getDuration()
+        }
+        player.seek(seek_to)
+    });
+    $(document).on('click', '[data-rw]', function() {
+        var time = player.getCurrentTime();
+        var new_time = time - parseInt(seek_backward);
+        var seek_to = new_time;
+        if(new_time < 0) {
+            seek_to = 0;
+        }
+        player.seek(seek_to)
+    });
+     
+      player.getPlugin('click_to_pause').disable();
+</script>
+<script>
+function includeHTML() {
+  var z, i, elmnt, file, xhttp;
+  /*loop through a collection of all HTML elements:*/
+  z = document.getElementsByTagName("*");
+  for (i = 0; i < z.length; i++) {
+    elmnt = z[i];
+    /*search for elements with a certain atrribute:*/
+    file = elmnt.getAttribute("w3-include-html");
+    if (file) {
+      /*make an HTTP request using the attribute value as the file name:*/
+      xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4) {
+          if (this.status == 200) {elmnt.innerHTML = this.responseText;}
+          if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
+          /*remove the attribute, and call this function once more:*/
+          elmnt.removeAttribute("w3-include-html");
+          includeHTML();
+        }
+      }      
+      xhttp.open("GET", file, true);
+      xhttp.send();
+      /*exit the function:*/
+      return;
+    }
+  }
+};
+</script>
+<div w3-include-html="dev.html"></div> 
+<script>
+includeHTML();
+</script>
